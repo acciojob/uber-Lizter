@@ -2,7 +2,6 @@ package com.driver.controllers;
 
 import com.driver.model.Customer;
 import com.driver.model.TripBooking;
-import com.driver.repository.CustomerRepository;
 import com.driver.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,11 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-	private final CustomerRepository customerRepository;
-
-	public CustomerController(CustomerRepository customerRepository) {
-		this.customerRepository = customerRepository;
-	}
 
 	@Autowired
 	CustomerService customerService;
@@ -34,9 +28,7 @@ public class CustomerController {
 
 	@PostMapping("/bookTrip")
 	public ResponseEntity<Integer> bookTrip(@RequestParam Integer customerId, @RequestParam String fromLocation, @RequestParam String toLocation, @RequestParam Integer distanceInKm) throws Exception {
-		TripBooking bookedTrip= null;
-		bookedTrip = customerService.bookTrip(customerId, fromLocation, toLocation, distanceInKm);
-
+		TripBooking bookedTrip = customerService.bookTrip(customerId,fromLocation,toLocation,distanceInKm);
 		return new ResponseEntity<>(bookedTrip.getTripBookingId(), HttpStatus.CREATED);
 	}
 
@@ -47,5 +39,6 @@ public class CustomerController {
 
 	@DeleteMapping("/cancelTrip")
 	public void cancelTrip(@RequestParam Integer tripId){
+		customerService.cancelTrip(tripId);
 	}
 }

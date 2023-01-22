@@ -1,63 +1,50 @@
 package com.driver.model;
 
-
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 
-@Entity
-@Table
-public class Cab{
-    @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private int id;
-
+public class Cab {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int perKmRate;
-
-
-    boolean available;
-
-    @OneToOne
-    @JoinColumn
-    Driver driver;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private int perKmRate;
 
     public Cab(int perKmRate, boolean available) {
-        this.perKmRate=perKmRate;
-        this.available=available;
-    }
-
-    public int getId() {
-        return id;
+        this.perKmRate = perKmRate;
+        this.available = available;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-
-    public Cab() {
-    }
-
-
-
-    public int getPerKmRate() {
-        return perKmRate;
-    }
-
     public void setPerKmRate(int perKmRate) {
         this.perKmRate = perKmRate;
-    }
-
-    public boolean isAvailable() {
-        return available;
     }
 
     public void setAvailable(boolean available) {
         this.available = available;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getPerKmRate() {
+        return perKmRate;
+    }
+
+    public boolean getAvailable() {
+        return available;
+    }
+
+    public Cab() {
+    }
+
+    private boolean available;
+
+    @OneToOne
+    @JoinColumn
+    private Driver driver;
 
     public Driver getDriver() {
         return driver;

@@ -1,40 +1,16 @@
-
-
-
 package com.driver.model;
 
-
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
-import java.util.*;
+import java.util.List;
 
 public class Driver {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "driverId", nullable = false)
-    int driverId;
-
-    String mobile;
-
-    String password;
-
-
-
-    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
-    Cab cab;
-
-
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
-    private List<TripBooking> tripBookingList;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int driverId;
+    private String mobile;
+    private String password;
 
     public Driver() {
-    }
-
-    public Driver(String mobile, String password) {
-        this.mobile=mobile;
-        this.password=password;
     }
 
     public int getDriverId() {
@@ -61,6 +37,14 @@ public class Driver {
         this.password = password;
     }
 
+    public Driver(String mobile, String password) {
+        this.mobile = mobile;
+        this.password = password;
+    }
+
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
+    private Cab cab;
+
     public Cab getCab() {
         return cab;
     }
@@ -68,6 +52,9 @@ public class Driver {
     public void setCab(Cab cab) {
         this.cab = cab;
     }
+
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    private List<TripBooking> tripBookingList;
 
     public List<TripBooking> getTripBookingList() {
         return tripBookingList;

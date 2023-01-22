@@ -9,44 +9,38 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
-	@Autowired
-	AdminService adminService;
+    @Autowired
+    AdminService adminService;
+    @PostMapping("/register")
+    public ResponseEntity<Void> registerAdmin(@RequestBody Admin admin){
+        adminService.adminRegister(admin);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-	@PostMapping("/register")
-	public ResponseEntity<Void> registerAdmin(@RequestBody Admin admin){
-		adminService.adminRegister(admin);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+    @PutMapping("/update")
+    public ResponseEntity<Admin> updateAdminPassword(@RequestParam Integer adminId, @RequestParam String password){
+        Admin updatedAdmin= adminService.updatePassword(adminId,password);
+        return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
+    }
 
-	@PutMapping("/update")
-	public ResponseEntity<Admin> updateAdminPassword(@RequestParam Integer adminId, @RequestParam String password){
-		Admin updatedAdmin = adminService.updatePassword(adminId,password);
-		return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
-	}
+    @DeleteMapping("/delete")
+    public void deleteAdmin(@RequestParam Integer adminId){
+        adminService.deleteAdmin(adminId);
+    }
 
-	@DeleteMapping("/delete")
-	public void deleteAdmin(@RequestParam Integer adminId){
-		adminService.deleteAdmin(adminId);
-	}
+    @GetMapping("/listOfCustomers")
+    public List<Customer> listOfCustomers() {
+        return adminService.getListOfCustomers();
+    }
 
-	@GetMapping("/listOfCustomers")
-	public List<Customer> listOfCustomers() {
-		List<Customer> listOfCustomers= new ArrayList<>();
-		listOfCustomers=adminService.getListOfCustomers();
-		return listOfCustomers;
-	}
-
-	@GetMapping("/listOfDrivers")
-	public List<Driver> listOfDrivers() {
-		List<Driver> listOfDrivers = new ArrayList<>();
-		listOfDrivers =adminService.getListOfDrivers();
-		return listOfDrivers;
-	}
+    @GetMapping("/listOfDrivers")
+    public List<Driver> listOfDrivers() {
+        return adminService.getListOfDrivers();
+    }
 }
