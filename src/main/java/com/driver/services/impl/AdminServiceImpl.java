@@ -1,5 +1,6 @@
 package com.driver.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.driver.services.AdminService;
@@ -28,30 +29,43 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void adminRegister(Admin admin) {
 		//Save the admin in the database
+		Admin admin1= new Admin();
+		admin1.setAdminId(admin.getAdminId());
+		admin1.setUsername(admin.getUsername());
+		admin1.setPassword(admin.getPassword());
+		adminRepository1.save(admin1);
 	}
 
 	@Override
 	public Admin updatePassword(Integer adminId, String password) {
 		//Update the password of admin with given id
-
+		Admin admin= adminRepository1.findById(adminId).get();
+		admin.setPassword(password);
+		adminRepository1.save(admin);
+		return admin;
 	}
 
 	@Override
 	public void deleteAdmin(int adminId){
 		// Delete admin without using deleteById function
-
+		Admin admin = adminRepository1.findById(adminId).get();
+		adminRepository1.delete(admin);
 	}
 
 	@Override
 	public List<Driver> getListOfDrivers() {
 		//Find the list of all drivers
-
+		List<Driver> listOfDrivers = new ArrayList<>();
+		listOfDrivers = driverRepository1.findAll();
+		return listOfDrivers;
 	}
 
 	@Override
 	public List<Customer> getListOfCustomers() {
 		//Find the list of all customers
-
+		List<Customer> listOfCustomers= new ArrayList<>();
+		listOfCustomers = customerRepository1.findAll();
+		return listOfCustomers;
 	}
 
 }

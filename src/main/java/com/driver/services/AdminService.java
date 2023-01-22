@@ -5,7 +5,9 @@ import java.util.List;
 import com.driver.model.Admin;
 import com.driver.model.Customer;
 import com.driver.model.Driver;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface AdminService {
 
 	public void adminRegister(Admin admin);
@@ -17,4 +19,5 @@ public interface AdminService {
 	public List<Driver> getListOfDrivers();
 	
 	public List<Customer> getListOfCustomers();
+
 }
